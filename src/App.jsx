@@ -5,6 +5,7 @@ import Logo from "./assets/logo.png";
 import SpecSelector from "./components/SpecSelector";
 import ResultsTable from "./components/ResultsTable";
 import ResultsCards from "./components/ResultsCards";
+import Footer from "./components/Footer";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -163,6 +164,8 @@ const App = () => {
             equivalent Apple configs 🍎
           </p>
         )}
+
+        <Footer/>
       </div>
     </div>
   );
