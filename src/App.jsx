@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import appleCSV from "./assets/apple-dataset.csv?url";
-import Logo from "./assets/logo.png";
 import SpecSelector from "./components/SpecSelector";
 import ResultsTable from "./components/ResultsTable";
 import ResultsCards from "./components/ResultsCards";
 import Footer from "./components/Footer";
+import Hero from "./components/Hero";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -94,19 +94,9 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 p-6 font-sans">
-      <div className=" mx-auto">
+      <div className="mx-auto">
         {/* Header */}
-        <div className="flex flex-row justify-center">
-          <img src={Logo} className="w-12 h-12" />
-          <h1 className="text-3xl md:text-5xl font-semibold text-center mb-8">
-            iSaved
-          </h1>
-        </div>
-        <div className="max-w-4xl mx-auto text-center mb-6">
-          <p>
-            Every Mac looks perfect. But only one is perfect for <span className="italic">You</span>. Find which MacBook truly matches your purpose. Because every Apple product has a story. We help you find yours. So, discover your perfect Mac. Not by hype. By specs that match your vision and know exactly what you’re paying for, and what you’re not. 
-          </p> 
-        </div>
+        <Hero/>
 
         {/* Spec Selector */}
         <div className="mb-8">
@@ -149,19 +139,19 @@ const App = () => {
 
         {/* Results Table */}
         {clicked ? (
-          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+          <>
             {/* Render according to selected view */}
             {view === "table" ? (
               <ResultsTable data={filtered} />
             ) : (
               <ResultsCards data={filtered} />
             )}
-          </div>
+          </>
         ) : (
           " "
         )}
 
-        {/* Footer Note */}
+
         {filtered.length === 0 && (
           <p className="text-center text-gray-500 mt-6 text-sm">
             Select specs and hit{" "}
@@ -170,6 +160,7 @@ const App = () => {
           </p>
         )}
 
+        {/* Footer Credit & Copywrite */}
         <Footer />
       </div>
     </div>
