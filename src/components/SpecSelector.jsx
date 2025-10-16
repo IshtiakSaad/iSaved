@@ -4,18 +4,19 @@ const SpecSelector = ({
   specs,
   setSpecs,
   onSearch,
-  processorOptions,
-  ramOptions,
-  storageOptions,
+  processorOptions = [],
+  ramOptions = [],
+  storageOptions = [],
 }) => {
   const selectClass =
-    "border border-gray-300 bg-white text-gray-800 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-300 transition";
+    "border border-gray-300 bg-white text-gray-800 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-300 transition w-full sm:w-auto";
 
   const buttonClass =
-    "bg-green-600 hover:bg-green-500 text-white font-medium rounded-lg px-6 py-2 text-sm shadow-sm transition";
+    "bg-black hover:bg-gray-700 text-white font-medium rounded-lg px-6 py-2 text-sm shadow-sm transition w-full sm:w-auto";
 
   return (
-    <div className="flex flex-wrap justify-center gap-4">
+    <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
+      {/* Processor */}
       <select
         className={selectClass}
         value={specs.processor}
@@ -27,6 +28,7 @@ const SpecSelector = ({
         ))}
       </select>
 
+      {/* RAM */}
       <select
         className={selectClass}
         value={specs.ram}
@@ -38,6 +40,7 @@ const SpecSelector = ({
         ))}
       </select>
 
+      {/* Storage */}
       <select
         className={selectClass}
         value={specs.storage}
@@ -49,6 +52,7 @@ const SpecSelector = ({
         ))}
       </select>
 
+      {/* Match Button */}
       <button onClick={onSearch} className={buttonClass}>
         Match
       </button>

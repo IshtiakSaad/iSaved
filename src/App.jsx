@@ -4,12 +4,14 @@ import appleCSV from "./assets/apple-dataset.csv?url";
 import Logo from "./assets/logo.png";
 import SpecSelector from "./components/SpecSelector";
 import ResultsTable from "./components/ResultsTable";
+import ResultsCards from "./components/ResultsCards";
 
 const App = () => {
   const [data, setData] = useState([]);
   const [clicked, setClicked] = useState(false);
   const [filtered, setFiltered] = useState([]);
   const [specs, setSpecs] = useState({ processor: "", ram: "", storage: "" });
+  const [view, setView] = useState("table");
 
   const [processorOptions, setProcessorOptions] = useState([]);
   const [ramOptions, setRamOptions] = useState([]);
@@ -113,10 +115,41 @@ const App = () => {
           />
         </div>
 
+        {/* View Toggle */}
+        {filtered.length > 0 && (
+          <div className="flex justify-center gap-4 mb-4">
+            <button
+              onClick={() => setView("table")}
+              className={`px-4 py-2 rounded-lg font-medium ${
+                view === "table"
+                  ? "bg-black text-white"
+                  : "bg-base-300 text-black border-1 border-black border-solid"
+              }`}
+            >
+              Table View
+            </button>
+            <button
+              onClick={() => setView("cards")}
+              className={`px-4 py-2 rounded-lg font-medium ${
+                view === "cards"
+                  ? "bg-black text-white"
+                  : "bg-base-300 text-black border-1 border-black border-solid"
+              }`}
+            >
+              Card View
+            </button>
+          </div>
+        )}
+
         {/* Results Table */}
         {clicked ? (
           <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-            <ResultsTable data={filtered} />
+            {/* Render according to selected view */}
+            {view === "table" ? (
+              <ResultsTable data={filtered} />
+            ) : (
+              <ResultsCards data={filtered} />
+            )}
           </div>
         ) : (
           " "
