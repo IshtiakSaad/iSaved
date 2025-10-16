@@ -1,35 +1,138 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect } from "react";
+import Papa from "papaparse";
+import appleCSV from "./assets/apple-dataset.csv?url";
+import Logo from "./assets/logo.png";
+import SpecSelector from "./components/SpecSelector";
+import ResultsTable from "./components/ResultsTable";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [data, setData] = useState([]);
+  const [clicked, setClicked] = useState(false);
+  const [filtered, setFiltered] = useState([]);
+  const [specs, setSpecs] = useState({ processor: "", ram: "", storage: "" });
+
+  const [processorOptions, setProcessorOptions] = useState([]);
+  const [ramOptions, setRamOptions] = useState([]);
+  const [storageOptions, setStorageOptions] = useState([]);
+
+  const normalize = (str) =>
+    str
+      .replace(/\s+/g, " ")
+      .replace(/\u00A0/g, " ")
+      .trim()
+      .toLowerCase();
+
+  // Load Dataset
+  useEffect(() => {
+    Papa.parse(appleCSV, {
+      download: true,
+      header: true,
+      complete: (result) => {
+        const cleaned = result.data
+          .filter((row) => row.Price && row.Processor && row.RAM && row.Storage)
+          .map((row) => {
+            const price = parseFloat(
+              row.Price.replace(/,/g, "").replace(/"/g, "")
+            );
+            const ram = parseInt(row.RAM.replace("GB", "").trim());
+            let storage = 0;
+            if (row.Storage.includes("TB")) {
+              storage = parseFloat(row.Storage.replace("TB", "").trim()) * 1000;
+            } else if (row.Storage.includes("GB")) {
+              storage = parseInt(row.Storage.replace("GB", "").trim());
+            }
+            return {
+              ...row,
+              Price: price,
+              RAM: ram,
+              Storage: storage,
+              Processor: row.Processor.trim(),
+            };
+          });
+
+        setData(cleaned);
+
+        setProcessorOptions([...new Set(cleaned.map((d) => d.Processor))]);
+        setRamOptions(
+          [...new Set(cleaned.map((d) => d.RAM))].sort((a, b) => a - b)
+        );
+        setStorageOptions(
+          [...new Set(cleaned.map((d) => d.Storage))].sort((a, b) => a - b)
+        );
+      },
+    });
+  }, []);
+
+  //   Filter Logic
+  const handleFilter = () => {
+    if (!specs.processor || !specs.ram || !specs.storage) return;
+
+    setClicked(true);
+
+    const matches = data.filter(
+      (item) =>
+        (!specs.processor ||
+          normalize(item.Processor) === normalize(specs.processor)) &&
+        (!specs.ram || item.RAM === parseInt(specs.ram)) &&
+        (!specs.storage || item.Storage === parseInt(specs.storage))
+    );
+
+    setFiltered(
+      matches.length
+        ? matches
+            .map((m) => ({
+              ...m,
+              PriceDiff: m.Price - Math.min(...matches.map((x) => x.Price)),
+            }))
+            .sort((a, b) => a.Price - b.Price)
+        : []
+    );
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <div className="min-h-screen bg-gray-50 text-gray-900 p-6 font-sans">
+      <div className=" mx-auto">
+        {/* Header */}
+        <div className="flex flex-row justify-center">
+          <img src={Logo} className="w-12 h-12" />
+          <h1 className="text-3xl md:text-5xl font-semibold text-center mb-8">
+            iSaved
+          </h1>
+        </div>
 
-export default App
+        {/* Spec Selector */}
+        <div className="mb-8">
+          <SpecSelector
+            specs={specs}
+            setSpecs={setSpecs}
+            onSearch={handleFilter}
+            processorOptions={processorOptions}
+            ramOptions={ramOptions}
+            storageOptions={storageOptions}
+            className="bg-white rounded-xl p-6 shadow-sm border border-gray-200"
+          />
+        </div>
+
+        {/* Results Table */}
+        {clicked ? (
+          <div className="bg-white rounded-xl shadow-sm border border-gray-200">
+            <ResultsTable data={filtered} />
+          </div>
+        ) : (
+          " "
+        )}
+
+        {/* Footer Note */}
+        {filtered.length === 0 && (
+          <p className="text-center text-gray-500 mt-6 text-sm">
+            Select specs and hit{" "}
+            <span className="font-medium text-gray-800">Match</span> to see
+            equivalent Apple configs 🍎
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default App;
