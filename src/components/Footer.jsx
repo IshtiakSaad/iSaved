@@ -11,20 +11,12 @@ const Footer = () => {
       <p className="text-gray-600 text-sm mt-1">
         📧{" "}
         <a
-          href="mailto:imsaad.exe@gmail.com"
+          href="mailto:imsaad.actual@gmail.com"
           className="hover:text-emerald-500 transition-colors"
         >
-          imsaad.exe@gmail.com
-        </a>{" "}
-        | 🌐{" "}
-        <a
-          href="https://github.com/IshtiakSaad"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="hover:text-emerald-500 transition-colors"
-        >
-          GitHub
+          imsaad.actual@gmail.com
         </a>
+        
       </p>
 
       <p className="text-gray-400 text-xs mt-2">

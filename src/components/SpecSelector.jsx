@@ -11,8 +11,14 @@ const SpecSelector = ({
   const selectClass =
     "border border-gray-300 bg-white text-gray-800 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-300 transition w-full sm:w-auto";
 
-  const buttonClass =
-    "bg-black hover:bg-gray-700 text-white font-medium rounded-lg px-6 py-2 text-sm shadow-sm transition w-full sm:w-auto";
+  const buttonClass = (enabled) =>
+    `font-medium rounded-lg px-6 py-2 text-sm shadow-sm transition w-full sm:w-auto ${
+      enabled
+        ? "bg-black hover:bg-gray-700 text-white cursor-pointer"
+        : "bg-gray-400 text-gray-200 cursor-not-allowed"
+    }`;
+
+  const isReady = specs.processor && specs.ram && specs.storage;
 
   return (
     <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4">
@@ -53,7 +59,11 @@ const SpecSelector = ({
       </select>
 
       {/* Match Button */}
-      <button onClick={onSearch} className={buttonClass}>
+      <button
+        onClick={onSearch}
+        className={buttonClass(isReady)}
+        disabled={!isReady}
+      >
         Match
       </button>
     </div>

@@ -102,6 +102,11 @@ const App = () => {
             iSaved
           </h1>
         </div>
+        <div className="max-w-4xl mx-auto text-center mb-6">
+          <p>
+            Every Mac looks perfect. But only one is perfect for <span className="italic">You</span>. Find which MacBook truly matches your purpose. Because every Apple product has a story. We help you find yours. So, discover your perfect Mac. Not by hype. By specs that match your vision and know exactly what you’re paying for, and what you’re not. 
+          </p> 
+        </div>
 
         {/* Spec Selector */}
         <div className="mb-8">
@@ -160,12 +165,12 @@ const App = () => {
         {filtered.length === 0 && (
           <p className="text-center text-gray-500 mt-6 text-sm">
             Select specs and hit{" "}
-            <span className="font-medium text-gray-800">Match</span> to see
-            equivalent Apple configs 🍎
+            <span className="font-medium text-gray-800">Match</span>. Just like
+            that!
           </p>
         )}
 
-        <Footer/>
+        <Footer />
       </div>
     </div>
   );
