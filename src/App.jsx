@@ -116,7 +116,7 @@ const App = () => {
           <div className="flex justify-center gap-4 mb-4">
             <button
               onClick={() => setView("table")}
-              className={`px-4 py-2 rounded-lg font-medium ${
+              className={`px-4 py-2 rounded-lg font-medium text-sm cursor-pointer ${
                 view === "table"
                   ? "bg-black text-white"
                   : "bg-base-300 text-black border-1 border-black border-solid"
@@ -126,7 +126,7 @@ const App = () => {
             </button>
             <button
               onClick={() => setView("cards")}
-              className={`px-4 py-2 rounded-lg font-medium ${
+              className={`px-4 py-2 rounded-lg font-medium text-sm cursor-pointer ${
                 view === "cards"
                   ? "bg-black text-white"
                   : "bg-base-300 text-black border-1 border-black border-solid"
