@@ -33,7 +33,7 @@ Well that's over! Now you don’t have to scroll through endless pages—just pi
 ## 💻 Tech Stack
 
 - **React** + **Vite**  
-- **TailwindCSS** + **DaisyUI**  
+- **TailwindCSS** 
 - **PapaParse** for CSV data  
 
 ---
@@ -47,8 +47,8 @@ Add or update devices in the CSV, and the app automatically adapts.
 
 ## 🎉 Fun Fact
 
-This little app lets you feel like a **tech matchmaker** for Apple devices. 🍏💚
+This little app lets you feel like a **tech matchmaker** for Apple devices!
 
 ---
 
-Made with ❤️ by **Ishtiak Saad**
+Developed by **Ishtiak Saad**
