@@ -7,7 +7,7 @@ const Footer = () => {
         Developed by{" "}
         <span className="font-semibold text-gray-900">Ishtiak Saad</span>
       </p>
-
+      <p className="text-gray-600 text-xs my-2">Last Updated: October 24th, 2025</p>
       <p className="text-gray-600 text-sm mt-1">
         📧{" "}
         <a
@@ -16,7 +16,6 @@ const Footer = () => {
         >
           imsaad.actual@gmail.com
         </a>
-        
       </p>
 
       <p className="text-gray-400 text-xs mt-2">
